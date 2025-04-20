@@ -1,15 +1,27 @@
 import yaml
 from ollama import generate
 from docx import Document
-from docx.shared import Pt
-from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
-from docx.oxml.ns import qn
-from docx.oxml import OxmlElement
+import glob
 
-def parse_yaml_data():
-    with open('file_event_win_adsi_cache_creation_by_uncommon_tool.yml', 'r') as f:
+def gather_yaml_files(dir):
+    document = Document()
+    yaml_files = glob.glob(dir+'/**/*.y*ml', recursive=True)
+
+    print(f'Found {len(yaml_files)} files, processing...')
+
+    for file in yaml_files[0:2]:
+        print(f'{file}: Processing...')
+        data = parse_yaml_data(file)
+        print(f'{file}: Got yml data...')
+        output = analyze_with_ai(data)
+        print(f'{file}: Finished analyzing with ollama...')
+        document.add_paragraph(output)
+        print(f'{file}: Added to doc...')
+    document.save('final.docx')
+
+def parse_yaml_data(yaml_file):
+    with open(yaml_file, 'r') as f:
         data = yaml.full_load(f)
-        #whole_file = yaml.load(f, Loader=yaml.SafeLoader)
 
     output = {
         'title': data.get('title'),
@@ -24,7 +36,7 @@ def parse_yaml_data():
 
 def analyze_with_ai(parsed_data):
     response = generate('gemma3', f'''
-            Convert the following Sigma SIEM rule information into a clear, human-readable format:
+Convert the following Sigma SIEM rule information into a clear, human-readable format:
 
 Input: A single YAML rule with components including name, description, trigger conditions, severity level, response actions, log source requirements, and additional notes.
 
@@ -56,10 +68,4 @@ Here's the rule to convert:
     return(response['response'])
 
 
-
-
-yaml_output = parse_yaml_data()
-ai_result = analyze_with_ai(yaml_output)
-document = Document()
-document.add_paragraph(ai_result)
-document.save('final.docx')
+gather_yaml_files('./sigma/rules/windows')
