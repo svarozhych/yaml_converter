@@ -5,19 +5,28 @@ import glob
 from log_conf import logger 
 
 
-def gather_yaml_files(dir):
+def convert_yaml_files(dir):
     document = Document()
     yaml_files = glob.glob(dir+'/**/*.y*ml', recursive=True)
-
-    print(f'Found {len(yaml_files)} files, processing...')
+    if not yaml_files:
+        logger.error(f"No YAML files found in directory: {dir}")
+        return
+        
+    logger.info(f'Found {len(yaml_files)} files, processing...')
 
     for file in yaml_files[0:2]:
-        data = parse_yaml_data(file)
-        logger.info(f'Parsed file: {file}')
-        output = analyze_with_ai(data)
-        logger.info(f'Finished analyzing with ollama: {file}')
-        document.add_paragraph(output)
-        logger.info(f'Added to .docx: {file}')
+        try:
+            data = parse_yaml_data(file)
+            logger.info(f'Parsed file: {file}')
+            output = analyze_with_ai(data)
+            logger.info(f'Finished analyzing with ollama: {file}')
+            document.add_paragraph(output)
+            logger.info(f'Added to .docx: {file}')
+        except Exception as e:
+            logger.error(f"Error processing YAML files: {str(e)}")
+        except yaml.YAMLError as e:
+            logger.error(f"YAML parsing error: {str(e)}")
+
     document.save('final.docx')
 
 def parse_yaml_data(yaml_file):
@@ -69,4 +78,4 @@ Here's the rule to convert:
     return(response['response'])
 
 
-gather_yaml_files('./sigma/rules/windows')
+convert_yaml_files('./sigma/rules/windows')
