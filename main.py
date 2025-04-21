@@ -2,6 +2,8 @@ import yaml
 from ollama import generate
 from docx import Document
 import glob
+from log_conf import logger 
+
 
 def gather_yaml_files(dir):
     document = Document()
@@ -10,13 +12,12 @@ def gather_yaml_files(dir):
     print(f'Found {len(yaml_files)} files, processing...')
 
     for file in yaml_files[0:2]:
-        print(f'{file}: Processing...')
         data = parse_yaml_data(file)
-        print(f'{file}: Got yml data...')
+        logger.info(f'Parsed file: {file}')
         output = analyze_with_ai(data)
-        print(f'{file}: Finished analyzing with ollama...')
+        logger.info(f'Finished analyzing with ollama: {file}')
         document.add_paragraph(output)
-        print(f'{file}: Added to doc...')
+        logger.info(f'Added to .docx: {file}')
     document.save('final.docx')
 
 def parse_yaml_data(yaml_file):
