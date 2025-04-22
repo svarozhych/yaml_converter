@@ -1,4 +1,5 @@
 import logging
+import sys
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -13,5 +14,10 @@ error_handler = logging.FileHandler('error.log', mode='a')
 error_handler.setLevel(logging.ERROR)
 error_handler.setFormatter(formatter)
 
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.setLevel(logging.INFO)
+console_handler.setFormatter(formatter)
+
 logger.addHandler(info_handler)
 logger.addHandler(error_handler)
+logger.addFilter(console_handler)

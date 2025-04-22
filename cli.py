@@ -1,0 +1,32 @@
+import logging
+import sys
+from main import convert_yaml_files, convert_single_file
+
+root_logger = logging.getLogger()
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(message)s')
+console_handler.setFormatter(formatter)
+root_logger.addHandler(console_handler)
+
+
+def do_collect_user_input():
+    print("Welcome to YAML Converter")
+    print("1. Convert a single YAML file")
+    print("2. Convert multiple YAML files from a directory")
+    choice = input("Enter your choice(1 or 2): ")
+    if choice == '1':
+        path = input("Please provide an absolute path to the YAML file location: ")
+        if convert_single_file(path):
+            print("Success!")
+        else:
+            print("Conversion failed. Please see logs.")
+    if choice == '2':
+        path = input("Please provide an absolute path to the yaml files location: ")
+        if convert_yaml_files(path):
+            print("Success!")
+        else:
+            print("Conversion failed. Please see logs.")
+
+if __name__ == '__main__':
+    do_collect_user_input()
