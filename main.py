@@ -138,6 +138,7 @@ def add_formatted_text_to_document(document, text, rule_number=None):
             p.paragraph_format.space_before = Pt(0)
             p.paragraph_format.space_after = Pt(3)
 
-    p = document.add_paragraph('_' * 105)
-    p.paragraph_format.space_after = Pt(9)
-    p.alignment = 1  
+    if rule_number is not None:
+        p = document.add_paragraph('_' * 105)
+        p.paragraph_format.space_after = Pt(9)
+        p.alignment = 1  
