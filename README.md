@@ -52,7 +52,7 @@ The tool generates:
 
 Logging can be configured in `log_conf.py`.
 
-The output text format can be configered in `text_format.py`.
+The output text format can be configured in `text_format.py`.
 
 ## 🤝 Contributing
 

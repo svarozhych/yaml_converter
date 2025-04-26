@@ -12,23 +12,23 @@ console_handler.setFormatter(formatter)
 root_logger.addHandler(console_handler)
 
 
-def do_collect_user_input():
-    print("Welcome to YAML Converter")
+def collect_user_input():
+    print("Welcome to YAML Converter!")
     print("1. Convert a single YAML file")
     print("2. Convert multiple YAML files from a directory")
-    choice = input("Enter your choice(1 or 2): ")
+    choice = input("Enter your choice (1 or 2): ")
     if choice == '1':
-        path = input("Please provide an absolute path to the YAML file location: ")
+        path = input("Please provide a path to the YAML file location: ")
         if convert_single_file(path):
             print("Success!")
         else:
             print("Conversion failed. Please see logs.")
     if choice == '2':
-        path = input("Please provide an absolute path to the yaml files location: ")
+        path = input("Please provide a path to the YAML files directory: ")
         if convert_yaml_files(path):
             print("Success!")
         else:
             print("Conversion failed. Please see logs.")
 
 if __name__ == '__main__':
-    do_collect_user_input()
+    collect_user_input()

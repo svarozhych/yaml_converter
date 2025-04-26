@@ -12,7 +12,6 @@ def convert_yaml_files(dir):
     if not yaml_files:
         logger.error(f"No YAML files found in directory: {dir}")
         success = False
-        
     logger.info(f'Found {len(yaml_files)} files, processing...')
 
     rule_count = 1
@@ -33,24 +32,23 @@ def convert_yaml_files(dir):
             logger.error(f"YAML parsing error: {str(e)}")
             success = False
 
-    document.save('final.docx')
+    document.save('converted_yaml_files.docx')
     return success
 
 def convert_single_file(path):
     document = Document()
-    yaml_file = path
     success = True
 
-    if not yaml_file:
+    if not path:
         logger.error("YAML file does not exist")
         success = False
     try:
-        data = parse_yaml_data(yaml_file)
-        logger.info(f'Parsed file: {yaml_file}')
+        data = parse_yaml_data(path)
+        logger.info(f'Parsed file: {path}')
         output = analyze_with_ai(data)
-        logger.info(f'Finished analyzing with ollama: {yaml_file}')
+        logger.info(f'Finished analyzing with ollama: {path}')
         add_formatted_text_to_document(document, output)
-        logger.info(f'Added to .docx: {yaml_file}')
+        logger.info(f'Added to .docx: {path}')
         document.save('converted_yaml.docx')
         success = True
     except Exception as e:
@@ -62,8 +60,8 @@ def convert_single_file(path):
 
     return success
 
-def parse_yaml_data(yaml_file):
-    with open(yaml_file, 'r') as f:
+def parse_yaml_data(path):
+    with open(path, 'r') as f:
         data = yaml.full_load(f)
 
     output = {
