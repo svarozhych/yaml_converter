@@ -2,7 +2,7 @@
 A command-line tool that converts YAML files into human-readable, formatted Word documents using AI-powered analysis.
 
 ## 📋 Overview
-YAML Converter transforms files with .yml and .yaml extensions into well-formatted documentation. It parses YAML structure, uses Gemma3 AI to convert technical specifications into clear language, and outputs professional Word documents. 
+YAML Converter transforms files with .yml and .yaml extensions into well-formatted documentation. It is designed with the purpose to make Sigma Rules understandable for security professionals. It parses YAML structure, uses Gemma3 AI to convert technical specifications into clear language, and outputs professional Word documents. 
 
 ## Features
 
@@ -32,9 +32,13 @@ pip install -r requirements.txt
 ```
 ## 💻 Usage
 
+Start ollama with:
+```
+ollama pull gemma3
+```
 Run the CLI tool with:
 ```
-yaml_converter
+./yaml_converter
 ```
 
 ## 📄 Output
@@ -49,3 +53,11 @@ The tool generates:
 Logging can be configured in `log_conf.py`.
 
 The output text format can be configered in `text_format.py`.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 💌 Contact
+
+Mariia Kyrychenko - mariia.kyrychenko@outlook.com
