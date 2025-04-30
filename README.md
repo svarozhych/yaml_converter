@@ -21,7 +21,7 @@ YAML Converter transforms files with .yml and .yaml extensions into well-formatt
 ### Setup
 1. Clone the repository
 ```
-git clone https://github.com/yourusername/yaml-converter.git
+git clone https://github.com/svarozhych/yaml_converter.git
 ```
 ```
 cd yaml-converter
