@@ -16,7 +16,7 @@ def convert_yaml_files(dir):
 
     rule_count = 1
 
-    for file in yaml_files[0:2]:
+    for file in yaml_files:
         try:
             data = parse_yaml_data(file)
             logger.info(f'Parsed file: {file}')
